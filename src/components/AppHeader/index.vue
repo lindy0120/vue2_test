@@ -8,8 +8,8 @@
                         <p>尚品汇欢迎您！</p>
                         <p>
                             <span>请</span>
-                            <a href="###">登录</a>
-                            <a href="###" class="register">免费注册</a>
+                            <router-link to="/login">登录</router-link>
+                            <router-link to="/register" class="register">免费注册</router-link>
                         </p>
                     </div>
                     <div class="typeList">
@@ -27,14 +27,14 @@
             <!--头部第二行 搜索区域-->
             <div class="bottom">
                 <h1 class="logoArea">
-                    <a class="logo" title="尚品汇" href="###" target="_blank">
+                    <router-link class="logo" title="尚品汇"  to="/home">
                         <img src="./images/logo.png" alt="">
-                    </a>
+                    </router-link>
                 </h1>
                 <div class="searchArea">
                     <form action="###" class="searchForm">
-                        <input type="text" id="autocomplete" class="input-error input-xxlarge" />
-                        <button class="sui-btn btn-xlarge btn-danger" type="button">搜索</button>
+                        <input type="text" id="autocomplete" class="input-error input-xxlarge" v-model="inputVal" />
+                        <button class="sui-btn btn-xlarge btn-danger" type="button" @click="getSearch">搜索</button>
                     </form>
                 </div>
             </div>
@@ -43,7 +43,49 @@
 
 <script>
 export default {
-    name: "AppHeader"
+    name: "AppHeader",
+    created (){
+    },
+    data(){
+      return {
+        inputVal: ''
+      }
+    },
+    methods: {
+      getSearch(){
+        // 字符串形式路由跳转
+        // this.$router.push("/search/"+this.inputVal+"?search="+this.inputVal)   //params参数+query参数
+        // 模板字符串形式
+        // 对象形式路由跳转，最常用s
+        this.$router.push({
+          name: 'search',
+          params: {
+            // keyword: '' || undefined, //传值为空传
+            keyword: this.inputVal //路由中配置的params属性
+          },
+          query: {
+            search: this.inputVal
+          }
+        },
+        // 解决多次跳转同一个路径且参数不变navigattionDuplicated的警告错误，下面方法可解决错误，治标不治本，且每一个push replace需要写一遍
+        // 更好的方法是从写push replace,在路由配置中
+        // ()=>{},
+        // ()=>{}
+        )
+      }
+    },
+    watch: {
+      //search输入框是否有默认值
+      $route:{
+        handler(val){
+          if(val.path === '/search'){
+            this.inputVal = val.query.search || ""
+          }else {
+            this.inputVal = ""
+          }
+        }
+      }
+    }
 }
 </script>
 
