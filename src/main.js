@@ -4,13 +4,15 @@ import App from './App.vue'
 // 引入路由
 import router from '@/router/index.bat'
 
-import { getCategoryList } from '@/api'
-getCategoryList()
+// 引入仓库
+import store from '@/store'
 
 Vue.config.productionTip = false
 
 new Vue({
   render: h => h(App),
   // 注册路由
-  router
+  router,
+  // 注册仓库store,组件实例身上多了$store
+  store,
 }).$mount('#app')

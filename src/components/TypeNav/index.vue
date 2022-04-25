@@ -411,6 +411,18 @@
 <script>
 export default {
   name: 'TypeNav',
+  props:['mm'],
+  mounted(){
+    console.log(this.props)
+  },
+  watch:{
+    mm:{
+      handler(){
+        console.log(11)
+      },
+      deep:true
+    }
+  }
 }
 </script>
 

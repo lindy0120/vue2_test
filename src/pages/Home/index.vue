@@ -1,6 +1,6 @@
 <template>
   <div class="homeBox">
-    <type-nav></type-nav>
+    <type-nav :categoryList="categoryList" mm="1"></type-nav>
     <list-container></list-container>
     <recommend />
     <rank />
@@ -18,6 +18,7 @@ import Rank from './Rank'
 import Like from './Like'
 import Floor from './Floor'
 import Brand from './Brand'
+import {mapState} from 'vuex'
 export default {
   components:{
     TypeNav,
@@ -27,6 +28,14 @@ export default {
     Like,
     Floor,
     Brand,
+  },
+  created(){
+    this.$store.dispatch("categoreList")
+  },
+  computed: {
+    ...mapState({
+      categoryList: state=>state.home.categoryList
+    })
   }
 }
 </script>

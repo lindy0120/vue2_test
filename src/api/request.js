@@ -1,9 +1,10 @@
 //axios进行二次封装
 import axios from 'axios';
 //进度条
-// import nprogress from 'nprogress';
+import nprogress from 'nprogress';
+console.log(nprogress)
 //因为进度条样式咱们没有引入
-// import "nprogress/nprogress.css";
+import "nprogress/nprogress.css";
 //引入Vuex仓库模块
 // import store from '@/store';
 
@@ -12,7 +13,7 @@ let instance = axios.create({
     //可以给请求路径中添加一些参数 
     baseURL: "/api",
     //设置请求时间（5S）
-    timeout: 5000
+    // timeout: 5000
 });
 
 
@@ -32,7 +33,7 @@ instance.interceptors.request.use((config) => {
     //   config.headers.token = store.state.user.token;
     // }
     //检测到程序发请求，请求拦截器可以检测到，进度条开始动
-    // nprogress.start();
+    nprogress.start();
     return config;
 });
 
@@ -40,7 +41,7 @@ instance.interceptors.request.use((config) => {
 instance.interceptors.response.use((res) => {
     //简化服务器返回的数据格式
     //服务器数据返回进度条结束
-    // nprogress.done();
+    nprogress.done();
     return res.data;
 }, (error) => {
     //终止promise链
